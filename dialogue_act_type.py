@@ -14,7 +14,6 @@ def classify_act_type(posts):
 
 
 def evaluate_classifier(classifier, test_set):
-    classifier.show_most_informative_features(100)
     print('Evaluation\n\t- Accuracy: {:.2%}'.format(
         nltk.classify.accuracy(classifier, test_set)))
 
@@ -32,9 +31,14 @@ def split_corpus(data_set):
 
 
 def extract_features(post):
-    features = {}
-    for word in nltk.word_tokenize(post):
-        features['contains({})'.format(word.lower())] = True
+    features = {
+        'starts with': post[0],
+        'ends with': post[-1]
+    }
+    for char in "?@#'_":
+        features['contains({})'.format(char)] = (char in post)
+    for word in [':)', 'are']:
+        features['contains({})'.format(word)] = (word in post)
     return features
 
 
