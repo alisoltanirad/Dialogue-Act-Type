@@ -9,6 +9,14 @@ def main():
 
 def classify_act_type(posts):
     train_set, test_set = preprocess_data(posts)
+    classifier = nltk.NaiveBayesClassifier.train(train_set)
+    evaluate_classifier(classifier, test_set)
+
+
+def evaluate_classifier(classifier, test_set):
+    classifier.show_most_informative_features(100)
+    print('Evaluation\n\t- Accuracy: {:.2%}'.format(
+        nltk.classify.accuracy(classifier, test_set)))
 
 
 def preprocess_data(posts):
@@ -18,7 +26,7 @@ def preprocess_data(posts):
 
 
 def split_corpus(data_set):
-    test_size = len(data_set) / 4
+    test_size = round(len(data_set) / 4)
     train_set, test_set = data_set[test_size:], data_set[:test_size]
     return train_set, test_set
 
