@@ -8,7 +8,15 @@ def main():
 
 
 def classify_act_type(posts):
-    pass
+    data_set = [(extract_features(post.text), post.get('class'))
+                for post in posts]
+
+
+def extract_features(post):
+    features = {}
+    for word in nltk.word_tokenize(post):
+        features['contains({})'.format(word.lower())] = True
+    return features
 
 
 def get_posts():
