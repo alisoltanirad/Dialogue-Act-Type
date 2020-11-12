@@ -8,9 +8,13 @@ def main():
 
 
 def classify_act_type(posts):
+    train_set, test_set = preprocess_data(posts)
+
+
+def preprocess_data(posts):
     data_set = [(extract_features(post.text), post.get('class'))
                 for post in posts]
-    train_set, test_set = split_corpus(data_set)
+    return split_corpus(data_set)
 
 
 def split_corpus(data_set):
@@ -29,8 +33,7 @@ def extract_features(post):
 def get_posts():
     ssl._create_default_https_context = ssl._create_unverified_context
     nltk.download('nps_chat')
-    posts = nltk.corpus.nps_chat.xml_posts()
-    return posts
+    return nltk.corpus.nps_chat.xml_posts()
 
 
 if __name__ == '__main__':
