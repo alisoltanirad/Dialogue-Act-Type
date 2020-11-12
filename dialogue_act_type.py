@@ -10,6 +10,13 @@ def main():
 def classify_act_type(posts):
     data_set = [(extract_features(post.text), post.get('class'))
                 for post in posts]
+    train_set, test_set = split_corpus(data_set)
+
+
+def split_corpus(data_set):
+    test_size = len(data_set) / 4
+    train_set, test_set = data_set[test_size:], data_set[:test_size]
+    return train_set, test_set
 
 
 def extract_features(post):
