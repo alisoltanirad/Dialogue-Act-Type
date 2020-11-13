@@ -1,6 +1,7 @@
 # https://github.com/alisoltanirad/Dialogue-Act-Type
 # Dependencies: nltk
 import ssl
+import json
 import nltk
 
 def main():
@@ -37,9 +38,14 @@ def extract_features(post):
     }
     for char in "?@#'_":
         features['contains({})'.format(char)] = (char in post)
-    for word in [':)', 'are']:
+    for word in get_informative_tokens():
         features['contains({})'.format(word)] = (word in post)
     return features
+
+
+def get_informative_tokens():
+    with open('informative_tokens.txt') as token_list:
+        return json.load(token_list)
 
 
 def get_posts():
