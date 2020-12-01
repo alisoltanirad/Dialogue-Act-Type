@@ -18,7 +18,10 @@ class ActTypeClassifier:
 
     def evaluate(self):
         evaluation_data = {
-            'Accuracy': nltk.classify.accuracy(self._classifier, self._test_set),
+            'Accuracy':
+                nltk.classify.accuracy(self._classifier, self._test_set),
+            'Most_Informative_features':
+                self._classifier.most_informative_features(50),
         }
         return evaluation_data
 
@@ -47,8 +50,8 @@ class ActTypeClassifier:
 
     def _extract_features(self, text):
         features = {
-            'starts with': text[0],
-            'ends with': text[-1]
+            'first-word': text.split()[0],
+            'ends-with': text[-1]
         }
         for char in "?@#'_":
             features['contains({})'.format(char)] = (char in text)
