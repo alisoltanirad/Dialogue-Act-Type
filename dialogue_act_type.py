@@ -3,22 +3,30 @@
 import ssl
 import json
 import nltk
+import inspect
 
 
 class ActTypeClassifier:
 
     def __init__(self):
         self._train_set, self._test_set = self._get_data()
-        self.classifier = nltk.NaiveBayesClassifier.train(self._train_set)
+        self._classifier = nltk.NaiveBayesClassifier.train(self._train_set)
+        self.labels = self.get_labels()
 
     def classify(self, text):
-        return self.classifier.classify(self._extract_features(text))
+        return self._classifier.classify(self._extract_features(text))
 
     def evaluate(self):
         evaluation_data = {
-            'Accuracy': nltk.classify.accuracy(self.classifier, self._test_set),
+            'Accuracy': nltk.classify.accuracy(self._classifier, self._test_set),
         }
         return evaluation_data
+
+    def get_labels(self):
+        labels = []
+        for label in self._classifier.labels():
+            labels.append(label)
+        return labels
 
     def _get_data(self):
         posts = self._download_corpus()
