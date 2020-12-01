@@ -11,8 +11,8 @@ class ActTypeClassifier:
         self._train_set, self._test_set = self._get_data()
         self.classifier = nltk.NaiveBayesClassifier.train(self._train_set)
 
-    def classify(self):
-        pass
+    def classify(self, text):
+        return self.classifier.classify(self._extract_features(text))
 
     def evaluate(self):
         evaluation_data = {
@@ -55,9 +55,6 @@ class ActTypeClassifier:
         except:
             return []
 
-    def _preprocess_text(self):
-        pass
-
 
 def main():
     classifier = ActTypeClassifier()
@@ -66,6 +63,7 @@ def main():
             classifier.evaluate()['Accuracy']
         )
     )
+    print(classifier.classify('Is this a question?'))
 
 
 if __name__ == '__main__':
