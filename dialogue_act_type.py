@@ -4,6 +4,35 @@ import ssl
 import json
 import nltk
 
+
+class ActTypeClassifier:
+
+    def __init__(self):
+        self._train_set, self._test_set = self._get_data_set()
+        self.classifier = nltk.NaiveBayesClassifier.train(self._train_set)
+
+    def classify(self):
+        pass
+
+    def evaluate(self):
+        pass
+
+    def _get_data_set(self):
+        pass
+
+    def _preprocess_data(self):
+        pass
+
+    def _split_corpus(self):
+        pass
+
+    def _extract_features(self):
+        pass
+
+    def _get_informative_tokens(self):
+        pass
+
+
 def main():
     classify_act_type(get_posts())
 
